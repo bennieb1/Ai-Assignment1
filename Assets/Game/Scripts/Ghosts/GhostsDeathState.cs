@@ -5,7 +5,7 @@ using static UnityEngine.UI.GridLayoutGroup;
 
 public class GhostsDeathState : GhostBaseState
 {
-    public string GoToReturnState = "Dead";
+    public string GoToReturnState = "Return";
     private int gotoReturnStateHash;
 
     public float respawnDelay = 3f;
