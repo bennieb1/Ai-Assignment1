@@ -38,7 +38,7 @@ public class fsm : MonoBehaviour
         hasState = fsmAnimator.HasState(0, hashStateName);
         Debug.Assert(hasState);
 #endif
-       // fsmAnimator.CrossFade(hashStateName, );
+        fsmAnimator.CrossFade(hashStateName, 0.0f, 0 );
         return hasState;
     }
 }
