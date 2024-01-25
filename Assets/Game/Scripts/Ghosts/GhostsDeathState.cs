@@ -33,7 +33,7 @@ public class GhostsDeathState : GhostBaseState
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         Debug.Log("I've been eaten! Going back to the ghost house.");
-        fsm.ChangeState(deathStateHash);
+      
         currentTimer = deathDuration;
         isReturningToGhostHouse = true;
         ghostController.SetMoveToLocation(ghostHouseLocation); // Assuming GhostController has a method to set the target
@@ -44,6 +44,8 @@ public class GhostsDeathState : GhostBaseState
 
     public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+
+        fsm.ChangeState(deathStateHash);
         if (isReturningToGhostHouse) 
         {
             // Check if the ghost has reached the ghost house
