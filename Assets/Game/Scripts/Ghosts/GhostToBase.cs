@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class GhostToBase : GhostBaseState
 {
-    public string GoToRespawnState = "Return";
+    public string GoToRespawnState = "Respawn";
     private int gotoRespawnState;
 
     public override void Init(GameObject _owner, fsm _fsm)
