@@ -9,7 +9,7 @@ public abstract class FSMBaseState : StateMachineBehaviour
     protected fsm fsm { get; private set; }
     protected GameObject gameObject { get; private set; }
 
-    public virtual void Init(fsm _fsm, GameObject _gameObject)
+    public virtual void Init(GameObject _gameObject, fsm _fsm )
     {
         fsm = _fsm;
         gameObject = _gameObject;

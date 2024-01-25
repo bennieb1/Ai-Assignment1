@@ -4,41 +4,41 @@ using UnityEngine;
 
 public class fsm : MonoBehaviour
 {
-  public RuntimeAnimatorController FSMcontroller;
 
-    public Animator FSManimator { get; private set; }
+    public RuntimeAnimatorController FSMController;
 
+    public Animator fsmAnimator { get; private set; }
 
     private void Awake()
     {
+        GameObject FSMGo = new GameObject("FSM", typeof(Animator));
+        FSMGo.transform.parent = transform;
 
-        GameObject FSMGo = new GameObject("FSM" , typeof(Animator));
-        FSMGo.transform.SetParent(transform);
-        FSManimator = GetComponent<Animator>();
-        FSManimator.runtimeAnimatorController = FSMcontroller;
-        FSMGo.hideFlags = HideFlags.HideInInspector;
+        fsmAnimator = FSMGo.GetComponent<Animator>();
+        fsmAnimator.runtimeAnimatorController = FSMController;
 
-        FSMBaseState[] states = FSManimator.GetBehaviours<FSMBaseState>();
-        foreach (FSMBaseState state in states)
+        //FSMGo.hideFlags = HideFlags.HideInInspector;
+
+        FSMBaseState[] behaviours = fsmAnimator.GetBehaviours<FSMBaseState>();
+        foreach (FSMBaseState state in behaviours)
         {
-            state.Init(this, FSMGo);
+            state.Init(gameObject, this);
         }
     }
 
-    public bool ChangeState(string stateName) {
-    
+    public bool ChangeState(string stateName)
+    {
         return ChangeState(Animator.StringToHash(stateName));
-
     }
 
     public bool ChangeState(int hashStateName)
     {
         bool hasState = true;
 #if UNITY_EDITOR
-        hasState = FSManimator.HasState(0, hashStateName);
+        hasState = fsmAnimator.HasState(0, hashStateName);
         Debug.Assert(hasState);
 #endif
-        FSManimator.CrossFade(hashStateName, 0.0f, 0);
+       // fsmAnimator.CrossFade(hashStateName, );
         return hasState;
     }
 }
