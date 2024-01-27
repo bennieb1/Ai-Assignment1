@@ -1,12 +1,14 @@
 using UnityEngine;
 
-public class BlinkyChaseState : GhostBaseState
+public class ClydeChasesState : GhostBaseState
 {
     public string GoToRunawayState = "Runaway";
     private int gotoRunawayStateHash;
 
     public string GoToDieState = "Dead";
     private int gotoDieStateHash;
+
+    private float scatterThreshold = 8.0f; // Distance at which Clyde starts scattering
 
     public override void Init(GameObject _owner, fsm _fsm)
     {
@@ -28,10 +30,19 @@ public class BlinkyChaseState : GhostBaseState
     {
         base.OnStateUpdate(animator, stateInfo, layerIndex);
 
-        // Target Pac-Man's position
-        ghostController.SetMoveToLocation(ghostController.PacMan.transform.position);
+        Vector2 pacmanPosition = ghostController.PacMan.position;
+        Vector2 ghostPosition = ghostController.transform.position;
+        float distanceToPacman = Vector2.Distance(ghostPosition, pacmanPosition);
 
-        // Check for Pac-Man's invincibility state
+        if (distanceToPacman > scatterThreshold)
+        {
+            ghostController.SetMoveToLocation(pacmanPosition);
+        }
+        else
+        {
+            ghostController.SetMoveToLocation(ghostController.ReturnLocation); // Scatter target
+        }
+
         if (GameDirector.Instance.state == GameDirector.States.enState_PacmanInvincible)
         {
             fsm.ChangeState(gotoRunawayStateHash);

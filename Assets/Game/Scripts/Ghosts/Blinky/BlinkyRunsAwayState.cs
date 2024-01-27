@@ -16,10 +16,9 @@ public class BlinkyRunsAwayState : GhostBaseState
         base.OnStateEnter(animator, stateInfo, layerIndex);
         if (ghostController != null)
         {
+            // Calculate opposite position to run away from Pac-Man
             Vector3 playerPosition = ghostController.PacMan.position;
             Vector3 oppositePosition = CalculateOppositePosition(playerPosition);
-
-            // Set the ghost's destination to run away from Pac-Man.
             ghostController.SetMoveToLocation(oppositePosition);
         }
     }
@@ -27,18 +26,20 @@ public class BlinkyRunsAwayState : GhostBaseState
     public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         base.OnStateUpdate(animator, stateInfo, layerIndex);
-        if (ghostController != null)
+
+        // Return to chase state once Pac-Man is no longer invincible
+        if (GameDirector.Instance.state != GameDirector.States.enState_PacmanInvincible)
         {
-            ghostController.pathCompletedEvent.AddListener(() => fsm.ChangeState(gotoChaseStateHash));
+            fsm.ChangeState(gotoChaseStateHash);
         }
     }
+
     private Vector3 CalculateOppositePosition(Vector3 targetPosition)
     {
-
         Vector3 ghostPosition = ghostController.transform.position;
         Vector3 directionToTarget = targetPosition - ghostPosition;
-        Vector3 oppositePosition = ghostPosition - (directionToTarget * 2);
-
+        Vector3 randomOffset = new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f));
+        Vector3 oppositePosition = ghostPosition - (directionToTarget * 2) + randomOffset;
         return oppositePosition;
     }
 }
