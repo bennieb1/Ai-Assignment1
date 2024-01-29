@@ -50,7 +50,7 @@ public class InkyChasesState : GhostBaseState
 
         // Calculate Inky's target position based on Pac-Man and Blinky's positions
         // The actual logic might depend on your game's specific mechanics
-        Vector3 targetPosition = pacmanPosition * 2 - blinkyPosition; // Example logic
+        Vector3 targetPosition = pacmanPosition  - blinkyPosition; // Example logic
 
         return targetPosition;
     }
