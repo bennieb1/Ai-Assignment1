@@ -19,6 +19,7 @@ public class GhostsDeathState : GhostBaseState
 
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+ 
         respawnTimer = respawnDelay;
         Debug.Log("Damn I'm dead..... ");
     }
@@ -31,5 +32,5 @@ public class GhostsDeathState : GhostBaseState
             fsm.ChangeState(gotoReturnStateHash);
         }
     }
-
+  
 }
